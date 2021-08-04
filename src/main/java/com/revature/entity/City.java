@@ -1,28 +1,38 @@
-package com.revature.models;
+package com.revature.entity;
 
-import java.util.Arrays;
+import com.revature.exceptions.NotFoundException;
+
 
 // POJO CLASS FOR CITY MODEL. 
 public class City {
 
-	private Character[] rtoCode;
+	private String rtoCode;
 	private String name;
-	private Character[] stateCode;
+	private String stateCode;
 	
-	public City(Character[] rtoCode, String name, Character[] stateCode) {
+	public City(String rtoCode, String name, String stateCode) {
 		super();
-		this.rtoCode =  new Character[5];
-		this.rtoCode = rtoCode;
+		this.rtoCode = null;
 		this.name = name;
-		this.stateCode = new Character[2];
-		this.stateCode = stateCode;
+		this.stateCode = null;
+	}
+	
+	public void setValues(String rtoCode, String stateCode) throws NotFoundException{
+		if(rtoCode.length()==4 || rtoCode.length()==5)
+			this.rtoCode = rtoCode;
+		else 
+			throw new NotFoundException("Rto code is not in correct format.");
+		if(stateCode.length()==2)
+			this.stateCode = stateCode;
+		else 
+			throw new NotFoundException("State code is not in correct format.");
 	}
 
-	public Character[] getRtoCode() {
+	public String getRtoCode() {
 		return rtoCode;
 	}
 
-	public void setRtoCode(Character[] rtoCode) {
+	public void setRtoCode(String rtoCode) {
 		this.rtoCode = rtoCode;
 	}
 
@@ -34,18 +44,18 @@ public class City {
 		this.name = name;
 	}
 
-	public Character[] getStateCode() {
+	public String getStateCode() {
 		return stateCode;
 	}
 
-	public void setStateCode(Character[] stateCode) {
+	public void setStateCode(String stateCode) {
 		this.stateCode = stateCode;
 	}
 
 	@Override
 	public String toString() {
-		return "City [rtoCode=" + Arrays.toString(rtoCode) + ", name=" + name + ", stateCode="
-				+ Arrays.toString(stateCode) + "]";
+		return "City [rtoCode=" + rtoCode + ", name=" + name + ", stateCode="
+				+ stateCode + "]";
 	}
 	
 }

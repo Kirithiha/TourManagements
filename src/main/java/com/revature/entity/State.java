@@ -1,25 +1,38 @@
-package com.revature.models;
+package com.revature.entity;
 
-import java.util.Arrays;
+
+import com.revature.exceptions.NotFoundException;
 
 // POJO CLASS FOR STATE MODEL.
 public class State {
 
-	private Character[] code;
+	private String code;
 	private String name;
 	
-	public State(Character[] code, String name) {
+	public State(String code, String name) {
 		super();
-		this.code = new Character[2];
-		this.code = code;
+		this.code = null;
 		this.name = name;
+		try {
+			setValues(code);
+		} catch (NotFoundException e) {
+			e.printStackTrace();
+		}
 	}
 
-	public Character[] getCode() {
+	public void setValues(String code) throws NotFoundException {
+		
+		if(code.length()==2)
+			this.code = code;
+		else 
+			throw new NotFoundException("State code is not in correct format.");
+	}
+	
+	public String getCode() {
 		return code;
 	}
 
-	public void setCode(Character[] code) {
+	public void setCode(String code) {
 		this.code = code;
 	}
 
@@ -33,7 +46,7 @@ public class State {
 
 	@Override
 	public String toString() {
-		return "State [code=" + Arrays.toString(code) + ", name=" + name + "]";
+		return "State [code=" + code + ", name=" + name + "]";
 	}
 		
 }

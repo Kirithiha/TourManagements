@@ -1,17 +1,23 @@
 package com.revature.service.implemenations;
 
 import com.revature.exceptions.NotFoundException;
-import com.revature.models.City;
-import com.revature.models.State;
+
+import org.apache.log4j.Logger;
+
+import com.revature.entity.City;
+import com.revature.entity.State;
 import com.revature.service.CityServiceRepository;
 import com.revature.service.StateServiceRepository;
 
 public class CityServiceImplementation implements CityServiceRepository{
 
+	static Logger log = Logger.getLogger("CityServiceImplementation.class");
+
 	@Override
 	public int saveCity(City newCity) throws NotFoundException {
 		
 		//CHECKS FOR FOREIGN KEY - STATE CODE.
+		log.debug("Inside SAVE CITY SERVICE");
 		int flag = 0;
 		for(State state :StateServiceRepository.state_list ) {
 			if(state.getCode().equals(newCity.getStateCode())) {
@@ -36,13 +42,15 @@ public class CityServiceImplementation implements CityServiceRepository{
 	public void readAllCities() {
 		
 		// TO DISPLAY ALL CITIES
+		log.debug("Inside READ ALL CITIES SERVICE");
 		cityList.forEach(System.out :: println);
 	}
 
 	@Override
-	public void readCityById(Character[] rtoCode) throws NotFoundException {
+	public void readCityById(String rtoCode) throws NotFoundException {
 
 		// STREAMS TO GET THE PARTICULAR STATE BY GIVEN STATE CODE.
+		log.debug("Inside READ CITY SERVICE");
 		City city = cityList.stream().filter(s-> rtoCode.equals(s.getRtoCode())).findAny().orElse(null);
 						
 		//THROWS EXCEPTION IF NO ID FOUND
@@ -58,7 +66,8 @@ public class CityServiceImplementation implements CityServiceRepository{
 	@Override
 	public int updateCity(City newCity) throws NotFoundException {
 		
-		Character[] cityCode = newCity.getRtoCode();
+		log.debug("Inside UPDATE CITY SERVICE");
+		String cityCode = newCity.getRtoCode();
 		
 		//STREAMS TO GET INDEX.
 	    City city = cityList.stream().filter(s-> cityCode.equals(s.getRtoCode())).findAny().orElse(null);
@@ -75,9 +84,10 @@ public class CityServiceImplementation implements CityServiceRepository{
 	}
 
 	@Override
-	public int deleteCity(Character[] rtoCode) throws NotFoundException {
+	public int deleteCity(String rtoCode) throws NotFoundException {
 		
 		// STREAMS TO GET THE INDEX OF ID
+		log.debug("Inside DELETE CITY SERVICE");
 		City city = cityList.stream().filter(s-> rtoCode.equals(s.getRtoCode())).findAny().orElse(null);
 						
 		//THROWS EXCEPTION IF NO ID FOUND

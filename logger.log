@@ -1,0 +1,11 @@
+2021-08-03 21:48:02 DEBUG class:17 - Inside Main
+2021-08-03 21:48:08 DEBUG class:17 - Inside State Admin class
+2021-08-03 21:48:18 DEBUG class:18 - Inside SAVE STATE CONTROLLER
+2021-08-03 21:48:18 DEBUG class:19 - Inside SAVE STATE UTIL
+2021-08-03 21:48:18 DEBUG class:17 - Inside SAVE STATE SERVICE
+2021-08-03 21:48:18 INFO  class:38 - State created successfully... :)
+2021-08-03 21:48:28 DEBUG class:17 - Inside CITY ADMIN
+2021-08-03 21:48:41 DEBUG class:18 - Inside SAVE CITY CONTROLLER
+2021-08-03 21:48:41 DEBUG class:19 - Inside SAVE CITY UTIL
+2021-08-03 21:48:41 DEBUG class:20 - Inside SAVE CITY SERVICE
+2021-08-03 21:48:41 INFO  class:40 - City created successfully... :)
