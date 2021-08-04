@@ -1,11 +1,12 @@
 package com.revature.service.implemenations;
 
 import com.revature.exceptions.NotFoundException;
-import com.revature.models.State;
+
+import com.revature.entity.State;
 import com.revature.service.StateServiceRepository;
 
 // STATE SERVICE REPOSITORY.
-public class StateServiceImpl implements StateServiceRepository {
+public class StateServiceImplementation implements StateServiceRepository {
 
 	@Override
 	public int saveState(State newState) throws NotFoundException {
@@ -28,7 +29,7 @@ public class StateServiceImpl implements StateServiceRepository {
 	}
 
 	@Override
-	public void readStateById(Character[] code) throws NotFoundException {
+	public void readStateById(String code) throws NotFoundException {
 		
 		// STREAMS TO GET THE PARTICULAR STATE BY GIVEN STATE CODE.
 		State st = state_list.stream().filter(s-> code.equals(s.getCode())).findAny().orElse(null);
@@ -45,7 +46,7 @@ public class StateServiceImpl implements StateServiceRepository {
 	@Override
 	public int updateState(State newState) throws NotFoundException {
 		
-		Character[] str = newState.getCode();
+		String str = newState.getCode();
 		
 		//STREAMS TO GET INDEX.
 	    State st = state_list.stream().filter(s-> str.equals(s.getCode())).findAny().orElse(null);
@@ -62,7 +63,7 @@ public class StateServiceImpl implements StateServiceRepository {
 	}
 
 	@Override
-	public int deleteState(Character[] stateCode) throws NotFoundException {
+	public int deleteState(String stateCode) throws NotFoundException {
 		
 		// STREAMS TO GET THE INDEX OF ID.
 		State st = state_list.stream().filter(s-> stateCode.equals(s.getCode())).findAny().orElse(null);

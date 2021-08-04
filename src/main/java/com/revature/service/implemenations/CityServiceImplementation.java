@@ -1,8 +1,9 @@
 package com.revature.service.implemenations;
 
 import com.revature.exceptions.NotFoundException;
-import com.revature.models.City;
-import com.revature.models.State;
+
+import com.revature.entity.City;
+import com.revature.entity.State;
 import com.revature.service.CityServiceRepository;
 import com.revature.service.StateServiceRepository;
 
@@ -40,10 +41,10 @@ public class CityServiceImplementation implements CityServiceRepository{
 	}
 
 	@Override
-	public void readCityById(Character[] rtoCode) throws NotFoundException {
+	public void readCityById(String stateCode) throws NotFoundException {
 
 		// STREAMS TO GET THE PARTICULAR STATE BY GIVEN STATE CODE.
-		City city = cityList.stream().filter(s-> rtoCode.equals(s.getRtoCode())).findAny().orElse(null);
+		City city = cityList.stream().filter(s-> stateCode.equals(s.getRtoCode())).findAny().orElse(null);
 						
 		//THROWS EXCEPTION IF NO ID FOUND
 		if(city == null) {
@@ -58,7 +59,7 @@ public class CityServiceImplementation implements CityServiceRepository{
 	@Override
 	public int updateCity(City newCity) throws NotFoundException {
 		
-		Character[] cityCode = newCity.getRtoCode();
+		String cityCode = newCity.getRtoCode();
 		
 		//STREAMS TO GET INDEX.
 	    City city = cityList.stream().filter(s-> cityCode.equals(s.getRtoCode())).findAny().orElse(null);
@@ -75,7 +76,7 @@ public class CityServiceImplementation implements CityServiceRepository{
 	}
 
 	@Override
-	public int deleteCity(Character[] rtoCode) throws NotFoundException {
+	public int deleteCity(String rtoCode) throws NotFoundException {
 		
 		// STREAMS TO GET THE INDEX OF ID
 		City city = cityList.stream().filter(s-> rtoCode.equals(s.getRtoCode())).findAny().orElse(null);
