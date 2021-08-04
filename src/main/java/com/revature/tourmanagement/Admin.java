@@ -1,5 +1,7 @@
 package com.revature.tourmanagement;
 
+import java.sql.SQLException;
+
 import org.apache.log4j.Logger;
 
 import com.revature.exceptions.NotFoundException;
@@ -8,7 +10,7 @@ import com.revature.properties.ScannerUtil;
 public class Admin {
 	
 	static Logger log = Logger.getLogger("Admin.class");
-    public static void main( String[] args ) throws NotFoundException {
+    public static void main( String[] args ) throws NotFoundException, SQLException {
     	
     	log.debug("Inside ADMIN MAIN");
     	do {

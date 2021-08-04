@@ -10,6 +10,10 @@ public class City {
 	private String name;
 	private String stateCode;
 	
+	public City() {
+		
+	}
+	
 	public City(String name) {
 		super();
 		this.rtoCode =  null;

@@ -2,81 +2,60 @@ package com.revature.service.implemenations;
 
 import com.revature.exceptions.NotFoundException;
 
+import java.util.List;
+import java.sql.SQLException;
+
+import org.apache.log4j.Logger;
+
+import com.revature.dao.implementation.StateDaoImplementation;
 import com.revature.entity.State;
 import com.revature.service.StateServiceRepository;
 
 // STATE SERVICE REPOSITORY.
 public class StateServiceImplementation implements StateServiceRepository {
 
+	static Logger log = Logger.getLogger("StateServiceImplementation.class");
+	
+	StateDaoImplementation s_impl = new StateDaoImplementation();
 	@Override
-	public int saveState(State newState) throws NotFoundException {
+	public int saveState(State newState) throws NotFoundException, SQLException {
 		
-		for(State state : state_list) {
-			//TO CHECK FOR UNIQUE CODE.
-			if(state.getCode().equals(newState.getCode()))
-				throw new NotFoundException("State Code Already Found");
-		}
-		// TO ADD STATE TO LIST.
-		state_list.add(newState);
-		return 1;
+		log.debug("Inside SAVE STATE");
+		// TO ADD STATE.
+		return s_impl.saveState(newState);
 	}
 
 	@Override
-	public void readAllStates() {
+	public void readAllStates() throws SQLException {
 		
+		log.debug("Inside READ ALL STATE");
 		// TO READ ALL STATES.
-		state_list.forEach(System.out :: println);
+		List<State> stateList = s_impl.readAllStates();
+		stateList.forEach(System.out :: println);
 	}
 
 	@Override
-	public void readStateById(String code) throws NotFoundException {
+	public void readStateById(String code) throws NotFoundException, SQLException {
 		
-		// STREAMS TO GET THE PARTICULAR STATE BY GIVEN STATE CODE.
-		State st = state_list.stream().filter(s-> code.equals(s.getCode())).findAny().orElse(null);
-				
-		//THROWS EXCEPTION IF NO ID WAS FOUND.
-		if(st == null) {
-			throw new NotFoundException("No state code found");
-		} else {
-			// TO DISPLAY THE STATE.
-			System.out.println(st);
-		}
+		log.debug("Inside READ STATE");
+		//TO DISPLAY STATE.
+		System.out.println(s_impl.readStateById(code));
 	}
 
 	@Override
-	public int updateState(State newState) throws NotFoundException {
+	public int updateState(State newState) throws NotFoundException, SQLException {
 		
-		String str = newState.getCode();
-		
-		//STREAMS TO GET INDEX.
-	    State st = state_list.stream().filter(s-> str.equals(s.getCode())).findAny().orElse(null);
-		
-	    //THROWS EXCEPTION IF NO ID WAS FOUND.
-	    if(st == null) {
-			throw new NotFoundException("No state code found");
-		} else {
-			// TO UPDATE THE STATE.
-			int i = state_list.indexOf(st);
-			state_list.set(i,newState);
-		}
-		return 1;
+		log.debug("Inside UPDATE STATE");
+		// TO UPDATE STATE.
+		return s_impl.updateState(newState);
 	}
 
 	@Override
-	public int deleteState(String stateCode) throws NotFoundException {
+	public int deleteState(String stateCode) throws NotFoundException, SQLException {
 		
-		// STREAMS TO GET THE INDEX OF ID.
-		State st = state_list.stream().filter(s-> stateCode.equals(s.getCode())).findAny().orElse(null);
-				
-		//THROWS EXCEPTION IF NO ID FOUND.
-		if(st == null) {
-			throw new NotFoundException("No state code found");
-		} else {
-			// TO REMOVE PARTICULAR ID FROM LIST.
-			int i = state_list.indexOf(st);
-			state_list.remove(i);
-		}
-		return 1;
+		log.debug("Inside DELETE STATE");
+		// TO DELETE STATE.
+		return s_impl.deleteState(stateCode);
 	}
 
 }

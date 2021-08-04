@@ -1,5 +1,7 @@
 package com.revature.tourmanagement;
 
+import java.sql.SQLException;
+
 import org.apache.log4j.Logger;
 
 import com.revature.controller.CityController;
@@ -10,7 +12,7 @@ import com.revature.properties.ScannerUtil;
 public class CityAdmin {
 
 	static Logger log = Logger.getLogger("CityAdmin.class");
-	public void accessCity() throws NotFoundException {
+	public void accessCity() throws NotFoundException, SQLException {
 
 		log.debug("Inside CITY ADMIN");
 		City city;
@@ -57,7 +59,7 @@ public class CityAdmin {
 					name = ScannerUtil.in.nextLine();
 					city = new City(name);
 					city.setCode(rtoCode, stateCode);
-					if(s_impl.updateCity(city)==1)
+					if(s_impl.updateCity(rtoCode, name)==1)
 						log.info("City Updated successfully... :)");
 					break;
 				case 4:

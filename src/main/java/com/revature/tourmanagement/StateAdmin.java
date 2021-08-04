@@ -1,5 +1,7 @@
 package com.revature.tourmanagement;
 
+import java.sql.SQLException;
+
 import org.apache.log4j.Logger;
 
 import com.revature.controller.StateController;
@@ -10,7 +12,7 @@ import com.revature.properties.ScannerUtil;
 public class StateAdmin {
 
 	static Logger log = Logger.getLogger("StateAdmin.class");
-	public void accessState() throws NotFoundException{
+	public void accessState() throws NotFoundException, SQLException{
 		
 		log.debug("Inside STATE ADMIN");
 		State s;

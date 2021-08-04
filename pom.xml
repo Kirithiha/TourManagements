@@ -29,7 +29,12 @@
     <groupId>log4j</groupId>
     <artifactId>log4j</artifactId>
     <version>1.2.14</version>
-	</dependency>	
+	</dependency>
+	<dependency>
+		    <groupId>mysql</groupId>
+		    <artifactId>mysql-connector-java</artifactId>
+		    <version>8.0.22</version>
+	   </dependency>	
   </dependencies>
 
   <build>

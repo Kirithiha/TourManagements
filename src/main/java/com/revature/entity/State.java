@@ -8,6 +8,10 @@ public class State {
 	private String code;
 	private String name;
 	
+	public State() {
+		
+	}
+	
 	public State(String name) {
 		super();
 		this.code = null;
