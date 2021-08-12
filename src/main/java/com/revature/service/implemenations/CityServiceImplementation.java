@@ -1,17 +1,14 @@
 package com.revature.service.implemenations;
 
-import com.revature.exceptions.NotFoundException;
+
 
 import java.util.List;
-import java.sql.SQLException;
 
 import org.apache.log4j.Logger;
 
 import com.revature.dao.implementation.CityDaoImplementation;
-import com.revature.entity.City;
-import com.revature.entity.State;
+import com.revature.dto.City;
 import com.revature.service.CityServiceRepository;
-import com.revature.service.StateServiceRepository;
 
 public class CityServiceImplementation implements CityServiceRepository{
 
@@ -20,7 +17,7 @@ public class CityServiceImplementation implements CityServiceRepository{
 	CityDaoImplementation c_impl = new CityDaoImplementation();
 	
 	@Override
-	public int saveCity(City newCity) throws NotFoundException, SQLException {
+	public int saveCity(City newCity) {
 		
 		log.debug("Inside SAVE CITY SERVICE");
 		//TO ADD CITY
@@ -28,24 +25,27 @@ public class CityServiceImplementation implements CityServiceRepository{
 	}
 
 	@Override
-	public void readAllCities() throws SQLException {
+	public void readAllCities() {
 		
 		log.debug("Inside READ ALL CITY SERVICE");
 		// TO DISPLAY ALL CITIES
 		List<City> cityList = c_impl.readAllCites();
-		cityList.forEach(System.out :: println);
+		if(cityList!=null)
+			cityList.forEach(System.out :: println);
 	}
 
 	@Override
-	public void readCityById(String rtoCode) throws NotFoundException, SQLException {
+	public void readCityById(String rtoCode) {
 
 		log.debug("Inside READ CITY SERVICE");
 		// TO DISPLAY PARTICULAR CITY.
-		System.out.println(c_impl.readCityById(rtoCode));
+		City city = c_impl.readCityById(rtoCode);
+		if(city!=null)
+			System.out.println(city);
 	}
 
 	@Override
-	public int updateCity(String rtoCode, String name) throws NotFoundException, SQLException {
+	public int updateCity(String rtoCode, String name) {
 		
 		log.debug("Inside UPDATE CITY SERVICE");
 		// TO UPDATE CITY.
@@ -53,7 +53,7 @@ public class CityServiceImplementation implements CityServiceRepository{
 	}
 
 	@Override
-	public int deleteCity(String rtoCode) throws NotFoundException, SQLException {
+	public int deleteCity(String rtoCode) {
 		
 		log.debug("Inside DELETE CITY SERVICE");
 		// TO DELETE CITY.

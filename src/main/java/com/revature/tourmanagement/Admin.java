@@ -1,6 +1,7 @@
 package com.revature.tourmanagement;
 
 import java.sql.SQLException;
+import java.util.InputMismatchException;
 
 import org.apache.log4j.Logger;
 
@@ -12,13 +13,17 @@ public class Admin {
 	static Logger log = Logger.getLogger("Admin.class");
     public static void main( String[] args ) throws NotFoundException, SQLException {
     	
-    	log.debug("Inside ADMIN MAIN");
-    	do {
-			int mainChoice;
-			System.out.println("Your choices are");
-			System.out.println("1. Manage State\n2. Manage City\n3. Logout");
-			System.out.println("Enter your choice :");
+    	int mainChoice=0;
+    	 for(;;) {
+			log.info("\nYour choices are");
+			log.info("\n1. Manage State\n2. Manage City\n3. Logout");
+			log.info("Enter your choice :");
+			try {
 			mainChoice = ScannerUtil.in.nextInt();
+			}catch(InputMismatchException e) {
+				log.info(e);
+			}
+			ScannerUtil.in.next();
 			switch(mainChoice) {
 				case 1:
 					StateAdmin state = new StateAdmin();
@@ -30,12 +35,12 @@ public class Admin {
 					break;
 				case 3:
 					ScannerUtil.in.close();
-					System.out.println("Logged Out Successfully ... :)");
+					log.info("Logged Out Successfully ... :)");
 					System.exit(0);
 					break;
 				default :
-					System.out.println("Please enter the valid choice !!");
+					log.info("Please enter the valid choice !!");
 			}
-		}while(true);	
+    	 }
     }
 }

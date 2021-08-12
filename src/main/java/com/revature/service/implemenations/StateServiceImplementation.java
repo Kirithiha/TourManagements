@@ -1,14 +1,11 @@
 package com.revature.service.implemenations;
 
-import com.revature.exceptions.NotFoundException;
-
 import java.util.List;
-import java.sql.SQLException;
 
 import org.apache.log4j.Logger;
 
 import com.revature.dao.implementation.StateDaoImplementation;
-import com.revature.entity.State;
+import com.revature.dto.State;
 import com.revature.service.StateServiceRepository;
 
 // STATE SERVICE REPOSITORY.
@@ -18,7 +15,7 @@ public class StateServiceImplementation implements StateServiceRepository {
 	
 	StateDaoImplementation s_impl = new StateDaoImplementation();
 	@Override
-	public int saveState(State newState) throws NotFoundException, SQLException {
+	public int saveState(State newState) {
 		
 		log.debug("Inside SAVE STATE");
 		// TO ADD STATE.
@@ -26,7 +23,7 @@ public class StateServiceImplementation implements StateServiceRepository {
 	}
 
 	@Override
-	public void readAllStates() throws SQLException {
+	public void readAllStates() {
 		
 		log.debug("Inside READ ALL STATE");
 		// TO READ ALL STATES.
@@ -35,7 +32,7 @@ public class StateServiceImplementation implements StateServiceRepository {
 	}
 
 	@Override
-	public void readStateById(String code) throws NotFoundException, SQLException {
+	public void readStateById(String code) {
 		
 		log.debug("Inside READ STATE");
 		//TO DISPLAY STATE.
@@ -43,7 +40,7 @@ public class StateServiceImplementation implements StateServiceRepository {
 	}
 
 	@Override
-	public int updateState(State newState) throws NotFoundException, SQLException {
+	public int updateState(State newState) {
 		
 		log.debug("Inside UPDATE STATE");
 		// TO UPDATE STATE.
@@ -51,7 +48,7 @@ public class StateServiceImplementation implements StateServiceRepository {
 	}
 
 	@Override
-	public int deleteState(String stateCode) throws NotFoundException, SQLException {
+	public int deleteState(String stateCode) {
 		
 		log.debug("Inside DELETE STATE");
 		// TO DELETE STATE.
