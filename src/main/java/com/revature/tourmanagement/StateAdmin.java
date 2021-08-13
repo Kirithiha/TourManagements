@@ -2,12 +2,14 @@ package com.revature.tourmanagement;
 
 
 
+import java.util.InputMismatchException;
+
 import org.apache.log4j.Logger;
 
-import com.revature.dto.State;
+import com.revature.dto.StateDto;
 import com.revature.exceptions.NotFoundException;
-import com.revature.properties.ScannerUtil;
-import com.revature.util.StateUtil;
+import com.revature.service.impl.StateServiceImpl;
+import com.revature.util.ScannerUtil;
 
 public class StateAdmin {
 
@@ -27,25 +29,30 @@ public class StateAdmin {
 	
 	public void accessState() {
 	
-		State s;
-		StateUtil s_impl = new StateUtil();
-		log.info("\nYour options are :");
-		log.info("\n1. Create \n2. Read \n3. Update \n4. Delete \n5. Back to Main Menu");
-		int choice;
+		StateDto s;
+		StateServiceImpl s_impl = new StateServiceImpl();
+		int choice=0;
 		do {
+			log.info("\nYour options are :");
+			log.info("\n1. Create \n2. Read \n3. Update \n4. Delete \n5. Back to Main Menu");
 			String code, name;
 			log.info("Enter your CRUD choice :");
-			choice = ScannerUtil.in.nextInt();
+			try {
+				choice = ScannerUtil.in.nextInt();
+			}catch(InputMismatchException e) {
+				log.info(e+" Enter integer value as input for choice");
+			}
 			ScannerUtil.in.nextLine();
+			int res;
 			switch(choice) {
 				case 1 :
 					log.info("Enter the state code :");
 					code = ScannerUtil.in.nextLine();
 					log.info("Enter the name of the state :");
 					name = ScannerUtil.in.nextLine();
-					s = new State(name);
-					s.setCodeValue(code);
-					if(s.getCode()!=null) {
+					res = checkCode(code);
+					if(res == 1) {
+						s = new StateDto(name,code);
 						if(s_impl.saveState(s) == 1) 
 							log.info("State created successfully... :)");
 					}
@@ -53,7 +60,12 @@ public class StateAdmin {
 				case 2 : 
 					log.info("Read state by\n1. ID\n2. All states");
 					log.info("Enter your read choice: ");
-					int readChoice = ScannerUtil.in.nextInt();
+					int readChoice =0;
+					try {
+						readChoice = ScannerUtil.in.nextInt();
+					} catch(InputMismatchException e) {
+						log.info(e+" Enter integer as choice");
+					}
 					ScannerUtil.in.nextLine();
 					if(readChoice == 1) {
 						log.info("Enter the code of the state to be displayed :");
@@ -68,9 +80,9 @@ public class StateAdmin {
 					code = ScannerUtil.in.nextLine();
 					log.info("Enter the name of the state to be updated :");
 					name = ScannerUtil.in.nextLine();
-					s = new State(name);
-					s.setCodeValue(code);
-					if(s.getCode()!=null) {
+					res = checkCode(code); 
+					if(res == 1){
+						s = new StateDto(name,code);
 						if(s_impl.updateState(s)==1)
 							log.info("State Updated successfully... :)");
 					}

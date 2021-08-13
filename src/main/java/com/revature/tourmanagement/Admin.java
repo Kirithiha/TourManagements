@@ -6,7 +6,7 @@ import java.util.InputMismatchException;
 import org.apache.log4j.Logger;
 
 import com.revature.exceptions.NotFoundException;
-import com.revature.properties.ScannerUtil;
+import com.revature.util.ScannerUtil;
 
 public class Admin {
 	
@@ -21,9 +21,10 @@ public class Admin {
 			try {
 			mainChoice = ScannerUtil.in.nextInt();
 			}catch(InputMismatchException e) {
-				log.info(e);
+				log.info(e+" Enter integer value as input for choice");
+				ScannerUtil.in.next();
 			}
-			ScannerUtil.in.next();
+			//ScannerUtil.in.next();
 			switch(mainChoice) {
 				case 1:
 					StateAdmin state = new StateAdmin();

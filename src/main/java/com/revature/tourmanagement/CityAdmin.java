@@ -1,18 +1,46 @@
 package com.revature.tourmanagement;
 
 import java.sql.SQLException;
+
 import java.util.InputMismatchException;
 
 import org.apache.log4j.Logger;
 
-import com.revature.dto.City;
+import com.revature.dto.CityDto;
 import com.revature.exceptions.NotFoundException;
-import com.revature.properties.ScannerUtil;
-import com.revature.util.CityUtil;
+import com.revature.service.impl.CityServiceImpl;
+import com.revature.util.ScannerUtil;
 
 public class CityAdmin {
 
 	static Logger log = Logger.getLogger("CityAdmin.class");
+	
+	// To CHECK RTO CODE(TN72 OR TN01X) AND STATE CODE(TN)
+	public int setCode (String rtoCode, String stateCode) {
+		int flag1 = 0, flag2 = 0;;
+		try {
+			System.out.println(rtoCode.length()+" " + rtoCode);
+			if(rtoCode.length() == 4 || rtoCode.length() == 5) 
+				flag1 = 1;
+			else {
+				flag1 = 0;
+				throw new NotFoundException("Rto code is not in correct format");
+			}
+			if(stateCode.length() == 2) 
+				flag2 = 1;
+			else {
+				flag2 = 0;
+				throw new NotFoundException("State code is not in correct format");
+			}
+		}catch(NotFoundException e) {
+			log.info(e);
+		}
+		if(flag1==1 && flag2==1)
+			return 1;
+		return 0;
+	}
+	
+	//TO CHECH RTOCODE ALONE(TN72 OR TN01X).
 	public int checkCode(String rtoCode) {
 		try {
 			System.out.println(rtoCode.length()+" " + rtoCode);
@@ -28,18 +56,18 @@ public class CityAdmin {
 	
 	public void accessCity() throws NotFoundException, SQLException {
 
-		City city;
-		CityUtil s_impl = new CityUtil();
-		log.info("\nYour options are :");
-		log.info("\n1. Create \n2. Read \n3. Update \n4. Delete \n5. Back to Main Menu");
+		CityDto city;
+		CityServiceImpl s_impl = new CityServiceImpl();
 		int choice=0;
 		do {
+			log.info("\nYour options are :");
+			log.info("\n1. Create \n2. Read \n3. Update \n4. Delete \n5. Back to Main Menu");
 			String rtoCode, name, stateCode;
 			System.out.println("Enter your CRUD choice :");
 			try {
 			choice = ScannerUtil.in.nextInt();
 			}catch(InputMismatchException e) {
-				log.info(e);
+				log.info(e+" Enter integer value as input for choice");
 			}
 			ScannerUtil.in.nextLine();
 			switch(choice) {
@@ -50,17 +78,22 @@ public class CityAdmin {
 					rtoCode = ScannerUtil.in.nextLine();
 					log.info("Enter the name of the city :");
 					name = ScannerUtil.in.nextLine();
-					city = new City(name);
-					city.setCode(rtoCode, stateCode);
-					if(city.getRtoCode()!=null && city.getStateCode()!=null) {
-					if(s_impl.saveCity(city) == 1) 
-						log.info("City created successfully... :)");
+					int res = setCode(rtoCode, stateCode);
+					if(res==1) {
+						city = new CityDto(name,rtoCode,stateCode);
+						if(s_impl.saveCity(city) == 1) 
+							log.info("City created successfully... :)");
 					}
 					break;
 				case 2 : 
 					log.info("Read city by\n1. ID\n2. All Cities");
 					log.info("Enter your read choice: ");
-					int readChoice = ScannerUtil.in.nextInt();
+					int readChoice =0;
+					try {
+						readChoice = ScannerUtil.in.nextInt();
+					} catch(InputMismatchException e) {
+						log.info(e+" Enter integer as choice");
+					}
 					ScannerUtil.in.nextLine();
 					if(readChoice == 1) {
 						log.info("Enter the rto code of the city to be displayed :");
